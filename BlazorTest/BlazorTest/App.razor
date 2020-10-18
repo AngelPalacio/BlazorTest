@@ -2,7 +2,7 @@
     <Found Context="routeData">
         <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
             <NotAuthorized>
-                <p>You must log in</p>
+                <RedirectToLogin />
             </NotAuthorized>
             <Authorizing>
                 <p>Just checking with the boss you can come in.</p>
