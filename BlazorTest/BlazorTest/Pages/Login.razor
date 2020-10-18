@@ -1,26 +1,8 @@
 ﻿@page "/login"
-@using System.Security.Claims
-@using Microsoft.AspNetCore.Components.Authorization
-@inject AuthenticationStateProvider AuthenticationStateProvider
-@inject NavigationManager NavigationManager
-
+@using BlazorTestComponents
 <div class="content align-middle text-center m-5">
     <h3>Welcome to our application</h3>
     <div class="m-5">
-
-        <div class="login-component">
-            <p>
-                <MatTextField @bind-Value="userName" Label="User name" Icon="person_outline"></MatTextField>
-            </p>
-            <p>
-                <MatTextField @bind-Value="password" Label="Password" Icon="lock_outline" Type="password"></MatTextField>
-            </p>
-            <p>
-                <MatButton type="submit" Unelevated="true" Label="Log in"></MatButton>
-            </p>
-        </div>
+        <LoginForm />
     </div>
 </div>
-
-@code { private string userName;
-    private string password; }

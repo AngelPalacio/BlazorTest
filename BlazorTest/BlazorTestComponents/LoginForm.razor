@@ -1,0 +1,14 @@
+﻿<div class="login-component">
+    <p>
+        <MatTextField @bind-Value="userName" Label="User name" Icon="person_outline"></MatTextField>
+    </p>
+    <p>
+        <MatTextField @bind-Value="password" Label="Password" Icon="lock_outline" Type="password"></MatTextField>
+    </p>
+    <p>
+        <MatButton type="submit" Unelevated="true" Label="Log in"></MatButton>
+    </p>
+</div>
+
+@code { private string userName;
+    private string password; }
