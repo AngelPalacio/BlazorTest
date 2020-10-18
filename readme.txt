@@ -1,0 +1,4 @@
+- The password is 123456 (user name doesn't matter)
+- The login is 100% fake, it doesn't really persist if the site is reloaded
+- I didn't delete the old branches after merging with main, simply to make it easy to see how I divided the work
+- I decided to create a release branch to add some flavour
