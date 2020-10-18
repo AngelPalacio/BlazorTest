@@ -1,25 +1,39 @@
 ﻿@inject IJSRuntime js
+@using BlazorTestComponents.Models
 
 <div class="login-component">
-    <p>
-        <MatTextField Id="@_userNameInputId" @bind-Value="userName" Label="User name" Icon="person_outline"></MatTextField>
-    </p>
-    <p>
-        <MatTextField @bind-Value="password" Label="Password" Icon="lock_outline" Type="password"></MatTextField>
-    </p>
-    <p>
-        <MatButton type="submit" Unelevated="true" Label="Log in"></MatButton>
-    </p>
+    <EditForm Model="@LoginModel" OnValidSubmit="@Login">
+        <p>
+            <MatTextField Id="@_userNameInputId" @bind-Value="@LoginModel.Name" Label="User name" Icon="person_outline"></MatTextField>
+        </p>
+        <p>
+            <MatTextField @bind-Value="@LoginModel.Password" Label="Password" Icon="lock_outline" Type="password"></MatTextField>
+        </p>
+        <p>
+            <MatButton type="submit" Unelevated="true" Label="Log in"></MatButton>
+        </p>
+
+        <div>
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+        </div>
+    </EditForm>
 </div>
 
-@code { private string userName;
-    private string password;
+@code { [Parameter]
+    public ILoginModel LoginModel { get; set; } = new LoginModel();
 
     private string _userNameInputId = "UserNameInput";
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
+            // set the focus on the user name input
             await js.InvokeVoidAsync("jsfunctions.focusOnElement", _userNameInputId);
         }
+    }
+
+    private async Task Login()
+    {
+        // to do
     } }
