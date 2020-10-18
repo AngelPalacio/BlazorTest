@@ -1,6 +1,30 @@
 ﻿@page "/login"
+@using System.Security.Claims
+@using Microsoft.AspNetCore.Components.Authorization
 @using BlazorTestComponents
-<div class="content align-middle text-center">
+@using BlazorTestComponents.Models
+@using BlazorTest.Models;
+
+<div class="content align-middle text-center m-5">
     <h3>Welcome to our application</h3>
-    <LoginForm />
+    <div class="m-5">
+        <LoginForm LoginModel="@loginModel" ErrorMessage="@errorMessage" OnLogin="@TryLogin"></LoginForm>
+    </div>
 </div>
+
+@code{ private ILoginModel loginModel = new MyPeculiarLoginModel();
+    private string errorMessage = "";
+    public async void TryLogin(ILoginModel userInfo)
+    {
+        // fake and simple validation
+        if (userInfo.Password != "123456")
+        {
+            errorMessage = "Wrong password, try 123456";
+        }
+        else
+        {
+            errorMessage = "";
+
+            // to do
+        }
+    } }

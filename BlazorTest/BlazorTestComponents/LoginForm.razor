@@ -2,7 +2,7 @@
 @using BlazorTestComponents.Models
 
 <div class="login-component">
-    <EditForm Model="@LoginModel" OnValidSubmit="@Login">
+    <EditForm Model="@LoginModel" OnValidSubmit="@Login" OnInvalidSubmit="() => {ErrorMessage=String.Empty;}">
         <p>
             <MatTextField Id="@_userNameInputId" @bind-Value="@LoginModel.Name" Label="User name" Icon="person_outline"></MatTextField>
         </p>
@@ -13,6 +13,9 @@
             <MatButton type="submit" Unelevated="true" Label="Log in"></MatButton>
         </p>
 
+        @if (!String.IsNullOrEmpty(ErrorMessage))
+        {
+<p class="validation-message">@ErrorMessage</p>}
         <div>
             <DataAnnotationsValidator />
             <ValidationSummary />
@@ -21,19 +24,30 @@
 </div>
 
 @code { [Parameter]
-    public ILoginModel LoginModel { get; set; } = new LoginModel();
+    public ILoginModel LoginModel { get; set; }
+    [Parameter]
+    public string ErrorMessage { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (LoginModel == null)
+        {
+            LoginModel = new LoginModel();
+        }
+    }
 
     private string _userNameInputId = "UserNameInput";
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
-            // set the focus on the user name input
             await js.InvokeVoidAsync("jsfunctions.focusOnElement", _userNameInputId);
         }
     }
 
+    [Parameter] public EventCallback<ILoginModel> OnLogin { get; set; }
+
     private async Task Login()
     {
-        // to do
+        OnLogin.InvokeAsync(LoginModel);
     } }
