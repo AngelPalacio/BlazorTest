@@ -42,18 +42,21 @@
 
 </MatDrawerContainer>
 
-@code { bool _navMenuOpened = true;
 
-    void MenuButtonClicked()
-    {
-        _navMenuOpened = !_navMenuOpened;
-        this.StateHasChanged();
-    }
+@code { [CascadingParameter] protected Task<AuthenticationState> AuthStat { get; set; }
 
-    protected void ModelDrawerHiddenChanged(bool hidden)
-    {
-        if (!hidden)
-        {
-            _navMenuOpened = false;
-        }
-    } }
+            bool _navMenuOpened = true;
+
+            void MenuButtonClicked()
+            {
+                _navMenuOpened = !_navMenuOpened;
+                this.StateHasChanged();
+            }
+
+            protected void ModelDrawerHiddenChanged(bool hidden)
+            {
+                if (!hidden)
+                {
+                    _navMenuOpened = false;
+                }
+            }}

@@ -5,6 +5,8 @@
 @using BlazorTestComponents
 @using BlazorTestComponents.Models
 @using BlazorTest.Models;
+@inject NavigationManager NavigationManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
 
 <div class="content align-middle text-center m-5">
     <h3>Welcome to our application</h3>
@@ -26,6 +28,14 @@
         {
             errorMessage = "";
 
-            // to do
+            ClaimsPrincipal user = new ClaimsPrincipal(new ClaimsIdentity(new[]
+            {
+            new Claim(ClaimTypes.Name, userInfo.Name),
+        }, "Fake authentication type"));
+
+            IHostEnvironmentAuthenticationStateProvider provider = (IHostEnvironmentAuthenticationStateProvider)AuthenticationStateProvider;
+            provider.SetAuthenticationState(Task.FromResult(new AuthenticationState(user)));
+
+            NavigationManager.NavigateTo("/");
         }
     } }
