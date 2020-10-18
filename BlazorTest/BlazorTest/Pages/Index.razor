@@ -1,6 +1,26 @@
 ﻿@page "/"
 @attribute [Authorize]
+@using System.Security.Claims
+@using Microsoft.AspNetCore.Components.Authorization
+@inject AuthenticationStateProvider AuthenticationStateProvider
 
-<h1>Hello, world!</h1>
+<h1>You logged in succesfully!</h1>
 
-Welcome to your new app.
+<h3>@_welcomeMessage</h3>
+
+@code { private string _welcomeMessage;
+
+    protected async override Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity.IsAuthenticated)
+        {
+            _welcomeMessage = $"Welcome {user.Identity.Name}!";
+        }
+        else
+        {
+            _welcomeMessage = "The user is NOT authenticated.";
+        }
+    } }

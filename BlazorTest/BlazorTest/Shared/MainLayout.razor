@@ -1,4 +1,5 @@
 ﻿@inherits LayoutComponentBase
+@inject NavigationManager NavigationManager
 
 @if (UserIsLogged)
 {
@@ -13,6 +14,9 @@
                             <MatHidden BreakPoint="@MatBreakpoint.SM" Direction="@MatHiddenDirection.Up">
                                 <MatAppBarTitle>Shorter title</MatAppBarTitle>
                             </MatHidden>
+                        </MatAppBarSection>
+                        <MatAppBarSection Align="@MatAppBarSectionAlign.End">
+                            <span>Logged as @LoggedUserName | <MatButton TrailingIcon="exit_to_app" Unelevated="true" OnClick="@Logout" Label="Log out"></MatButton></span>
                         </MatAppBarSection>
                     </MatAppBarRow>
                 </MatAppBar>
@@ -66,7 +70,12 @@
         }
     }
 
-    //Fields for checking if the user is logged and storing the name
+    private void Logout()
+    {
+        NavigationManager.NavigateTo("/login");
+    }
+
+    // Fields for checking if the user is logged and storing the name
     [CascadingParameter] protected Task<AuthenticationState> AuthStat { get; set; }
     [CascadingParameter] protected string LoggedUserName { get; set; }
     [CascadingParameter] protected bool UserIsLogged { get; set; }
@@ -86,4 +95,3 @@
             LoggedUserName = "";
         }
     } }
-    }
